@@ -67,12 +67,15 @@ func (w *Wrapper) Do(s string) string {
 
 	for i < len(ts) {
 		start := i
-		i += 1
+		for i < len(ts) && ts[i].Pos() == "連体詞" {
+			i += 1
+		}
 		if ts[i].Pos() == "名詞" {
 			for i < len(ts) && ts[i].Pos() == "名詞" {
 				i += 1
 			}
 		}
+		i += 1
 		for i < len(ts) && !isMainWord(&ts[i]) {
 			if isSeparateWord(&ts[i]) {
 				i += 1
