@@ -19,14 +19,18 @@ type CLI struct {
 func (c *CLI) Run() int {
 	var v bool
 	flag.BoolVar(&v, "version", false, "Print version information and quit")
+	var open string
+	var close string
+	flag.StringVar(&open, "open", `<span class="wordwrap">`, "Open string")
+	flag.StringVar(&close, "close", `</span>`, "Close string")
 	flag.Parse()
 
 	if v {
-		fmt.Fprintf(c.outStream, "japawrap %s", version)
+		fmt.Fprintf(c.outStream, "japawrap %s\n", version)
 		return 0
 	}
 
-	w := japawrap.New(`<span class="wordwrap">`, `</span>`)
+	w := japawrap.New(open, close)
 
 	for _, fn := range flag.Args() {
 		var input io.Reader
