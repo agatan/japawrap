@@ -35,6 +35,11 @@ func isMainWord(tok *tokenizer.Token) bool {
 	return false
 }
 
+func isSeparateWord(tok *tokenizer.Token) bool {
+	s := strings.TrimSpace(tok.Surface)
+	return s == "." || s == "," || s == "。" || s == "、" || s == "．" || s == "，"
+}
+
 func concatTokens(toks []tokenizer.Token) string {
 	s := []string{}
 	for _, tok := range toks {
@@ -69,6 +74,10 @@ func (w *Wrapper) Do(s string) string {
 			}
 		}
 		for i < len(ts) && !isMainWord(&ts[i]) {
+			if isSeparateWord(&ts[i]) {
+				i += 1
+				break
+			}
 			i += 1
 		}
 		rs = append(rs, w.wrap(concatTokens(ts[start:i])))
