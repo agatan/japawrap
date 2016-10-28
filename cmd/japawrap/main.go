@@ -21,7 +21,6 @@ func (c *CLI) process(w *japawrap.Wrapper, r io.Reader) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(s))
 	fmt.Fprintln(c.outStream, w.Do(string(s)))
 	return nil
 }
