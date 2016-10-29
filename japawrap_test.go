@@ -10,7 +10,8 @@ func TestWrap(t *testing.T) {
 		output string
 	}{
 		{"今日も元気です", `<span class="wordwrap">`, `</span>`, `<span class="wordwrap">今日も</span><span class="wordwrap">元気です</span>`},
-		{"総称です．その代表格は", `<span class="wordwrap">`, `</span>`, `<span class="wordwrap">総称です．</span><span class="wordwrap">その代表格は</span>`},
+		{"その代表格は", `<span class="wordwrap">`, `</span>`, `<span class="wordwrap">その代表格は</span>`},
+		{"その大規模化が進んでいる", `<span class="wordwrap">`, `</span>`, `<span class="wordwrap">その大規模化が</span><span class="wordwrap">進んで</span><span class="wordwrap">いる</span>`},
 	}
 
 	for _, c := range cases {
