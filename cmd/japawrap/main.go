@@ -1,10 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 
 	"github.com/agatan/japawrap"
@@ -17,12 +17,12 @@ type CLI struct {
 }
 
 func (c *CLI) process(w *japawrap.Wrapper, r io.Reader) error {
-	s, err := ioutil.ReadAll(r)
-	if err != nil {
-		return err
+	sc := bufio.NewScanner(r)
+	for sc.Scan() {
+		s := sc.Text()
+		fmt.Fprintln(c.outStream, w.Do(s))
 	}
-	fmt.Fprintln(c.outStream, w.Do(string(s)))
-	return nil
+	return sc.Err()
 }
 
 func (c *CLI) Run() int {
